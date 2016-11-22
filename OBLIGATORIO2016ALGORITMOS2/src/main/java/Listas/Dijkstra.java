@@ -14,6 +14,29 @@ import java.util.Scanner;
  *
  * @author Rodrigo
  */
+
+/*
+public class DijkstraAlgorithm {
+    
+    public static void main(String[] args) {
+        int E , origen, destino , peso , inicial, V;
+        Scanner sc = new Scanner( System.in );      //para lectura de datos
+        System.out.print("Ingrese el numero de vertices: ");
+        V = sc.nextInt();
+        System.out.print("Ingrese el numero de aristas: ");
+        E = sc.nextInt();
+        Dijkstra dijkstraAlgorithm = new Dijkstra(V);
+        for( int i = 0 ; i < E ; ++i ){
+            origen = sc.nextInt(); destino = sc.nextInt(); peso = sc.nextInt();
+            dijkstraAlgorithm.addEdge(origen, destino, peso, true);
+        }
+        System.out.print("Ingrese el vertice inicial: ");
+        inicial = sc.nextInt();
+        dijkstraAlgorithm.dijkstra(inicial);
+        dijkstraAlgorithm.printShortestPath();
+    }
+}
+*/
 class Dijkstra{
     
     //similar a los defines de C++
