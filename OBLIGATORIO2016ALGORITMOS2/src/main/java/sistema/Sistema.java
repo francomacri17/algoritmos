@@ -74,7 +74,7 @@ public class Sistema implements ISistema {
                 i++;
             }
         }
-        dijkstra = new Dijkstra(cantPuntos);
+        dijkstra = new Dijkstra(contarPuntos());
     }
 
     public Boolean hayLugar() {
@@ -183,14 +183,14 @@ public class Sistema implements ISistema {
         // TODO Auto-generated method stub
         Retorno r;
         if (peso <= 0) {
-                r = new Retorno(Resultado.ERROR_1, "El peso es menor o igual a 0", 1);
+                r = new Retorno(Resultado.ERROR_1, "El peso es menor o igual a 0", 2);
             } else{
-            if (!dijkstra.existsEdge(indexOrigen, indexDestino, peso, false)) {
+            //if (!dijkstra.existsEdge(indexOrigen, indexDestino, peso, false)) {
                 dijkstra.addEdge(indexOrigen, indexDestino, peso, false);
                 r = new Retorno(Resultado.OK);
-            }else{
-                r = new Retorno(Resultado.ERROR_3, "Ya existe un tramo registrado entre los vertices", 3);
-            }
+           // }else{
+               // r = new Retorno(Resultado.ERROR_3, "Ya existe un tramo registrado entre los vertices", 3);
+           // }
         }
         return r;
     }

@@ -840,7 +840,7 @@ public class Menu extends javax.swing.JFrame {
                 jTextFieldnombreEmpresaDC.getText(),
                 Integer.parseInt(jTextFieldCapacidadCPU.getText()),
                 Integer.parseInt(jTextFieldCostoCPU.getText())).resultado.toString());
-        cargarPuntosComboBox();
+
     }//GEN-LAST:event_RegistrarDataCenterActionPerformed
 
     private void RegistrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEmpresaActionPerformed
@@ -879,7 +879,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel2tramosResultado.setText("");
         Object itemO = jComboBoxOrigen.getSelectedItem();
         int valueOrigen = ((ComboItem)itemO).getValue();
-        Object itemD = jComboBoxDestino.getSelectedItem();
+        Object itemD = jComboBoxOrigen.getSelectedItem();
         int valueDestino = ((ComboItem)itemD).getValue();
         jLabel2tramosResultado.setText(sistema.registrarTramo(valueOrigen, valueDestino, Integer.parseInt(jTextFieldPesoTramo.getText())).resultado.toString());
         
@@ -890,7 +890,6 @@ public class Menu extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         sistema.cargarDatosPrueba();
-        cargarPuntosComboBox();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

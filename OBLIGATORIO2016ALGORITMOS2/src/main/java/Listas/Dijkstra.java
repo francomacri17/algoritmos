@@ -144,6 +144,7 @@ public class Dijkstra {
             ady.get(destino).add(new Node(origen, peso)); //no dirigido
         }
     }
+<<<<<<< HEAD
      public void removeEdge(int origen, int destino, int peso, boolean dirigido) {
         ady.get(origen).remove(new Node(destino, peso));    //grafo diridigo
         if (!dirigido) {
@@ -155,6 +156,19 @@ public class Dijkstra {
         if (ady.contains(origen)) {
             if(ady.get(origen).contains(destino)){
         }
+=======
+
+    public Boolean existsEdge(int origen, int destino, int peso, boolean dirigido) {
+        Boolean b = false;
+        if (ady.size() != 0) {
+            if (ady.get(origen) != null) {
+                if (ady.get(origen).get(destino) != null) {
+                    b = true;
+                }
+            }
+        }
+        return b;
+>>>>>>> parent of e6773ee... Agregando tramo
     }
 
     void printShortestPath() {
