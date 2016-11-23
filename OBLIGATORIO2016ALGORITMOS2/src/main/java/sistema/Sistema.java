@@ -3,6 +3,7 @@ package sistema;
 import Listas.CiudadLista;
 import Listas.DCLista;
 import Listas.abbEmpresa;
+import Listas.Dijkstra;
 import Modelo.Punto;
 import Modelo.ciudad;
 import Modelo.data_center;
@@ -15,22 +16,22 @@ public class Sistema implements ISistema {
     static abbEmpresa listaEmpresa = new abbEmpresa();
     static CiudadLista listaCiudad = new CiudadLista();
     static DCLista listaDC = new DCLista();
-    
-    
-    
-@Override
+    static Punto[] cantPuntos;
+    static Dijkstra dijkstra = new Dijkstra();
+    @Override
     public abbEmpresa getListaEmpresa() {
         return listaEmpresa;
     }
-    private static Punto[] cantPuntos;
 
-    public static Punto[] getCantPuntos() {
+    @Override
+    public Punto[] getCantPuntos() {
         return cantPuntos;
     }
 
     public static void setCantPuntos(int cantPuntos) {
-        if (getCantPuntos() == null) {
+        if (Sistema.cantPuntos == null) {
             Sistema.cantPuntos = new Punto[cantPuntos];
+            dijkstra.setMAX(cantPuntos);
         }
     }
 
@@ -73,6 +74,7 @@ public class Sistema implements ISistema {
                 i++;
             }
         }
+        dijkstra = new Dijkstra(contarPuntos());
     }
 
     public Boolean hayLugar() {
@@ -91,7 +93,19 @@ public class Sistema implements ISistema {
         }
         return b;
     }
-
+    public int contarPuntos() {
+        int i = 0;
+        if (cantPuntos != null) {
+            
+            while (i < cantPuntos.length) {
+                if (cantPuntos[i] == null) {
+                    i = cantPuntos.length;
+                }
+                i++;
+            }
+        }
+        return i;
+    }
     @Override
     public Retorno inicializarSistema(int cantPuntos) {
         // TODO Auto-generated method stub
@@ -143,35 +157,44 @@ public class Sistema implements ISistema {
         if (hayLugar()) {
             if (capacidadCPUenHoras <= 0) {
                 r = new Retorno(Resultado.ERROR_2, "Capacidad es menor o igual a 0", 2);
-            } else {
-                if (!pertence(coordX, coordY)) {
+            } else if (!pertence(coordX, coordY)) {
                 empresa e = listaEmpresa.buscarEmpresa(empresa);
                 if (e != null) {
-                    data_center dc = new data_center(nombre,coordX,coordY,e,capacidadCPUenHoras,costoCPUporHora,e.getColor());
+                    data_center dc = new data_center(nombre, coordX, coordY, e, capacidadCPUenHoras, costoCPUporHora, e.getColor());
                     listaDC.agregarNodoAlFinal(dc);
                     agregarPunto(dc);
                     r = new Retorno(Resultado.OK);
-                }else{
+                } else {
                     r = new Retorno(Resultado.ERROR_4, "La empresa no existe en el sistema", 4);
                 }
 
             } else {
                 r = new Retorno(Resultado.ERROR_3, "El punto ya existe", 3);
             }
-        } 
-    
-    }else {
+
+        } else {
             r = new Retorno(Resultado.ERROR_1, "Ya hay registrados cantPuntos puntos", 1);
         }
         return r;
     }
 
     @Override
-    public Retorno registrarTramo(Double coordXi, Double coordYi,
-            Double coordXf, Double coordYf, int peso) {
+    public Retorno registrarTramo(int indexOrigen, int indexDestino, int peso) {
         // TODO Auto-generated method stub
-        return new Retorno(Resultado.NO_IMPLEMENTADA);
+        Retorno r;
+        if (peso <= 0) {
+                r = new Retorno(Resultado.ERROR_1, "El peso es menor o igual a 0", 2);
+            } else{
+            //if (!dijkstra.existsEdge(indexOrigen, indexDestino, peso, false)) {
+                dijkstra.addEdge(indexOrigen, indexDestino, peso, false);
+                r = new Retorno(Resultado.OK);
+           // }else{
+               // r = new Retorno(Resultado.ERROR_3, "Ya existe un tramo registrado entre los vertices", 3);
+           // }
+        }
+        return r;
     }
+
 
     @Override
     public Retorno eliminarTramo(Double coordXi, Double coordYi,
@@ -211,5 +234,63 @@ public class Sistema implements ISistema {
         StringBuilder string = new StringBuilder();
         String s = listaEmpresa.inOrder(string).toString();
         return new Retorno(Resultado.OK, s, 1);
+    }
+
+    @Override
+    public ciudad getCiudad(Double x, Double y) {
+        return listaCiudad.darCiudad(x, y);
+    }
+    @Override
+    public ciudad getCiudad(String nombre) {
+        return listaCiudad.darCiudad(nombre);
+    }
+    @Override
+    public data_center getDC(Double x, Double y) {
+        return listaDC.darDC(x, y);
+    }
+    @Override
+    public data_center getDC(String nombre) {
+        return listaDC.darDC(nombre);
+    }
+    
+    @Override
+    public void cargarDatosPrueba(){
+        
+        ciudad c = new ciudad("Punta del Este",-34.9368789,-54.9281496);
+        listaCiudad.agregarNodoAlFinal(c);
+        agregarPunto(c);
+        
+        ciudad c1 = new ciudad("Silicon Valley",12.8771089,77.5106465);
+        listaCiudad.agregarNodoAlFinal(c1);
+        agregarPunto(c1);
+        
+        ciudad c2 = new ciudad("Rio de Janeiro",-22.9068467,-43.1728965);
+        listaCiudad.agregarNodoAlFinal(c2);
+        agregarPunto(c2);
+        
+        ciudad c3 = new ciudad("Buenos Aires",-34.6036844,-58.3815591);
+        listaCiudad.agregarNodoAlFinal(c3);
+        agregarPunto(c3);
+        
+        ciudad c4 = new ciudad("Rocha",-34.4790141,-54.3352997);
+        listaCiudad.agregarNodoAlFinal(c4);
+        agregarPunto(c4);
+        
+        ciudad c5 = new ciudad("Montevideo",-34.9011127,-56.1645314);
+        listaCiudad.agregarNodoAlFinal(c5);
+        agregarPunto(c5);
+                
+        listaEmpresa.insertar(new empresa("Google", "Calle corrientes 1225, La Plata","Argentina", "googleArgentina@gmail.com", "AZUL"));
+        listaEmpresa.insertar(new empresa("Antel", "18 de juli y ejido 1230, Canelones","Uruguay", "antelsupourtDC@antel.com", "AZUL"));
+        listaEmpresa.insertar(new empresa("Movistar", "Uruguay 1520, Brasilia","Brasil", "movistarDC@Movistar.com", "AZUL"));
+        listaEmpresa.insertar(new empresa("Claro", "AV. Simon Bolivar 1239, Asuncion","Paraguay", "claroDcSupourt@claro.com", "AZUL"));
+        
+        empresa e = new empresa("Intel", "BL. Freedom, Silicom Valley, Los Angeles","EEUU", "windowsDC@hotmail.com", "AZUL");
+        
+        listaEmpresa.insertar(e);
+        data_center dc = new data_center("UnknownDC", 12.8771089, 77.5106465, e, 100, 250, e.getColor());
+        listaDC.agregarNodoAlFinal(dc);
+        
+        agregarPunto(dc);
     }
 }

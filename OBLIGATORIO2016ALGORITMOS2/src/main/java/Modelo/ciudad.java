@@ -13,6 +13,10 @@ public class ciudad extends Punto {
 
     private String nombre;
 
+    public ciudad() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getNombre() {
         return nombre;
     }

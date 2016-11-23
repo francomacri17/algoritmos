@@ -1,6 +1,10 @@
 package Vista;
 
 import Listas.abbEmpresa;
+import Modelo.Punto;
+import Modelo.ciudad;
+import Modelo.data_center;
+import com.sun.xml.internal.ws.client.ContentNegotiation;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -13,6 +17,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,29 +31,32 @@ import maps.java.StreetView;
 import sistema.ISistema;
 import sistema.Sistema;
 
+public class Menu extends javax.swing.JFrame {
 
-public class Menu extends javax.swing.JFrame{
     private static ISistema sistema = new Sistema();
-     private Geocoding ObjGeocoding=new Geocoding();
-    private Elevation ObjElevation=new Elevation();
-    private ShowMaps ObjShowMaps=new ShowMaps();
-    private Route ObjRoute=new Route();
-    private StreetView ObjStreetView=new StreetView();
-    private StaticMaps ObjStaticMaps=new StaticMaps();
-    private Places ObjPlaces=new Places();
-    public Menu(){
+    private Geocoding ObjGeocoding = new Geocoding();
+    private Elevation ObjElevation = new Elevation();
+    private ShowMaps ObjShowMaps = new ShowMaps();
+    private Route ObjRoute = new Route();
+    private StreetView ObjStreetView = new StreetView();
+    private StaticMaps ObjStaticMaps = new StaticMaps();
+    private Places ObjPlaces = new Places();
+
+    public Menu() {
         initComponents();
     }
-    private void CodiGeografica() throws UnsupportedEncodingException, MalformedURLException{
-        if(!this.jTextFieldDireccionMapa.getText().isEmpty()){
 
-            Point2D.Double resultado=ObjGeocoding.getCoordinates(this.jTextFieldDireccionMapa.getText());
+    private void CodiGeografica() throws UnsupportedEncodingException, MalformedURLException {
+        if (!this.jTextFieldDireccionMapa.getText().isEmpty()) {
+
+            Point2D.Double resultado = ObjGeocoding.getCoordinates(this.jTextFieldDireccionMapa.getText());
             this.jTextFieldCoordenadaXCiudad.setText("");
             this.jTextFieldCoordenaYCiudad.setText("");
             this.jTextFieldCoordenadaXCiudad.setText(String.valueOf(resultado.x));
             this.jTextFieldCoordenaYCiudad.setText(String.valueOf(resultado.y));
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,7 +98,6 @@ public class Menu extends javax.swing.JFrame{
         jTextFieldEmail = new javax.swing.JTextField();
         jTextFieldColor = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -107,6 +114,20 @@ public class Menu extends javax.swing.JFrame{
         jPanel8 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jComboBoxOrigen = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jComboBoxDestino = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        jTextFieldPesoTramo = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel2tramosResultado = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
 
         setTitle("Detalles Place");
         setAlwaysOnTop(true);
@@ -281,7 +302,7 @@ public class Menu extends javax.swing.JFrame{
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,7 +410,7 @@ public class Menu extends javax.swing.JFrame{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 35, Short.MAX_VALUE)
+                                .addGap(0, 191, Short.MAX_VALUE)
                                 .addComponent(jLabelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(59, 59, 59))
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -443,19 +464,6 @@ public class Menu extends javax.swing.JFrame{
 
         jTabbedPaneDataCenter.addTab("Empresa", jPanel2);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 573, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
-        );
-
-        jTabbedPaneDataCenter.addTab("Tramo", jPanel9);
-
         jLabel6.setText("Coordenada Y: ");
 
         JLabel_DP_NombrePr1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -468,7 +476,7 @@ public class Menu extends javax.swing.JFrame{
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JLabel_DP_NombrePr1)
-                .addContainerGap(489, Short.MAX_VALUE))
+                .addContainerGap(645, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,7 +593,7 @@ public class Menu extends javax.swing.JFrame{
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(213, 213, 213)
                         .addComponent(jLabel9)))
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(366, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -598,6 +606,127 @@ public class Menu extends javax.swing.JFrame{
         );
 
         jTabbedPaneDataCenter.addTab("Salir", jPanel8);
+
+        jLabel10.setText("Origen");
+
+        jLabel18.setText("Destino");
+
+        jLabel19.setText("Peso");
+
+        jButton4.setText("Registrar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel2tramosResultado.setText("jLabel20");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2tramosResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2tramosResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(722, 722, 722)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel18)
+                                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(123, 123, 123)
+                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jComboBoxOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jComboBoxDestino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldPesoTramo)))
+                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(jComboBoxDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(jTextFieldPesoTramo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addGap(27, 27, 27))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+
+        jTabbedPaneDataCenter.addTab("Tramo", jPanel9);
+
+        jButton5.setText("Cargar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(209, 209, 209)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(265, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(189, 189, 189)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(219, Short.MAX_VALUE))
+        );
+
+        jTabbedPaneDataCenter.addTab("Datos de Prueba", jPanel11);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -614,11 +743,39 @@ public class Menu extends javax.swing.JFrame{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void cargarPuntosComboBox() {
+        jComboBoxOrigen.removeAllItems();
+        jComboBoxDestino.removeAllItems();
+        final DefaultComboBoxModel modeloOrigen = new DefaultComboBoxModel();
+        final DefaultComboBoxModel modeloDestino = new DefaultComboBoxModel();
+        Punto[] puntos = sistema.getCantPuntos();
 
+        for (int i = 0; i < puntos.length; i++) {
+            String s = new String();
+            if (puntos[i] instanceof ciudad) {
+                s = new StringBuilder("Ciudad :" + sistema.getCiudad(puntos[i].getCoordX(), puntos[i].getCoordY()).getNombre()).toString();
+                modeloOrigen.addElement(new ComboItem(s, i));
+                modeloDestino.addElement(new ComboItem(s,i));
+            }
+            if (puntos[i] instanceof data_center) {
+                s = new StringBuilder("DC :" + sistema.getDC(puntos[i].getCoordX(), puntos[i].getCoordY()).getNombre()).toString();
+                modeloOrigen.addElement(new ComboItem(s, i));
+                modeloDestino.addElement(new ComboItem(s,i));
+            } else {
+
+            }
+            
+        }
+        jComboBoxOrigen.setModel(modeloOrigen);
+        jComboBoxDestino.setModel(modeloDestino);
+    }
     private void RegistrarCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCiudadActionPerformed
         // TODO add your handling code here:
         jLabel11.setText("");
-        jLabel11.setText(sistema.registrarCiudad(this.jTextFieldNombreCiudad.getText(), Double.parseDouble(jTextFieldCoordenadaXCiudad.getText()), Double.parseDouble(jTextFieldCoordenaYCiudad.getText())).resultado.toString()); 
+        jLabel11.setText(sistema.registrarCiudad(this.jTextFieldNombreCiudad.getText(),
+                Double.parseDouble(jTextFieldCoordenadaXCiudad.getText()),
+                Double.parseDouble(jTextFieldCoordenaYCiudad.getText())).resultado.toString());
+        cargarPuntosComboBox();
     }//GEN-LAST:event_RegistrarCiudadActionPerformed
 
     private void jTextFieldNombreDCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreDCActionPerformed
@@ -670,6 +827,7 @@ public class Menu extends javax.swing.JFrame{
                 jTextFieldnombreEmpresaDC.getText(),
                 Integer.parseInt(jTextFieldCapacidadCPU.getText()),
                 Integer.parseInt(jTextFieldCostoCPU.getText())).resultado.toString());
+
     }//GEN-LAST:event_RegistrarDataCenterActionPerformed
 
     private void RegistrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEmpresaActionPerformed
@@ -703,6 +861,24 @@ public class Menu extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldnombreEmpresaDCActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jLabel2tramosResultado.setText("");
+        Object itemO = jComboBoxOrigen.getSelectedItem();
+        int valueOrigen = ((ComboItem)itemO).getValue();
+        Object itemD = jComboBoxOrigen.getSelectedItem();
+        int valueDestino = ((ComboItem)itemD).getValue();
+        jLabel2tramosResultado.setText(sistema.registrarTramo(valueOrigen, valueDestino, Integer.parseInt(jTextFieldPesoTramo.getText())).resultado.toString());
+        
+       // jLabel2ramosResultado.setText(sistema.)
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        sistema.cargarDatosPrueba();
+    }//GEN-LAST:event_jButton5ActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabel_DP_NombrePr;
     private javax.swing.JLabel JLabel_DP_NombrePr1;
@@ -713,7 +889,12 @@ public class Menu extends javax.swing.JFrame{
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBoxDestino;
+    private javax.swing.JComboBox<String> jComboBoxOrigen;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -721,7 +902,10 @@ public class Menu extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel2tramosResultado;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -732,6 +916,8 @@ public class Menu extends javax.swing.JFrame{
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JLabel jLabel_DC;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -740,6 +926,8 @@ public class Menu extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPaneDataCenter;
@@ -757,6 +945,7 @@ public class Menu extends javax.swing.JFrame{
     private javax.swing.JTextField jTextFieldNombreDC;
     private javax.swing.JTextField jTextFieldNombreEmpresa;
     private javax.swing.JTextField jTextFieldPais;
+    private javax.swing.JTextField jTextFieldPesoTramo;
     private javax.swing.JTextField jTextFieldnombreEmpresaDC;
     // End of variables declaration//GEN-END:variables
 }

@@ -67,4 +67,42 @@ public class DCLista {
     
     
     }
+    public data_center darDC(Double x, Double y) {
+        data_center dc = null;
+        DCNodo aux = inicio;
+        int ok = 0;
+        if (inicio != null) {
+
+            while (aux.sig != null && ok == 0) {
+                if (aux.unDC.getCoordX().equals(x) && aux.unDC.getCoordY().equals(y)) {
+                    dc = aux.unDC;
+                    ok = 1;
+                }
+                aux = aux.sig;
+            }
+            if (aux.unDC.getCoordX().equals(x) && aux.unDC.getCoordY().equals(y)) {
+                dc = aux.unDC;
+            }
+        }
+        return dc;
+    }
+    public data_center darDC(String nombre) {
+        data_center dc = null;
+        DCNodo aux = inicio;
+        int ok = 0;
+        if (inicio != null) {
+
+            while (aux.sig != null && ok == 0) {
+                if (aux.unDC.getNombre().equals(nombre)) {
+                    dc = aux.unDC;
+                    ok = 1;
+                }
+                aux = aux.sig;
+            }
+            if (aux.unDC.getNombre().equals(nombre)) {
+                dc = aux.unDC;
+            }
+        }
+        return dc;
+    }
 }

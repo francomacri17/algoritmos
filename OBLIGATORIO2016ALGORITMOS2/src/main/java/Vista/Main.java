@@ -7,6 +7,7 @@ package Vista;
 
 import Listas.abbEmpresa;
 import Modelo.empresa;
+import sistema.ISistema;
 
 /**
  *
@@ -19,8 +20,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
         Inicio i = new Inicio();
         i.setVisible(true);
-        
     }   
 }
