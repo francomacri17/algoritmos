@@ -5,6 +5,7 @@
  */
 package Listas;
 
+import Modelo.Punto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -39,12 +40,11 @@ public class DijkstraAlgorithm {
  */
 public class Dijkstra {
 
-
     //similar a los defines de C++
     private int MAX = 10005;  //maximo numero de vértices
 
     public Dijkstra() {
-        
+
     }
 
     public void setMAX(int MAX) {
@@ -60,16 +60,16 @@ public class Dijkstra {
     private int previo[] = new int[MAX];              //para la impresion de caminos
     private boolean dijkstraEjecutado;
 
-    public Dijkstra(int V) {
-        this.V = V;
-        for (int i = 0; i <= V; ++i) {
+    public Dijkstra(Punto[] V) {
+        this.V = V.length;
+        for (int i = 0; i <= V.length; ++i) {
             ady.add(new ArrayList<Node>()); //inicializamos lista de adyacencia
         }
         dijkstraEjecutado = false;
     }
-    
+
     //En el caso de java usamos una clase que representara el pair de C++
-    class Node implements Comparable<Node> {
+    public class Node implements Comparable<Node> {
 
         int first;
         int second;
@@ -145,15 +145,30 @@ public class Dijkstra {
         }
     }
 
+    public void removeEdge(int origen, int destino, int peso, boolean dirigido) {
+        ady.get(origen).remove(new Node(destino, peso));    //grafo diridigo
+        if (!dirigido) {
+            ady.get(destino).remove(new Node(origen, peso)); //no dirigido
+        }
+    }
+
     public Boolean existsEdge(int origen, int destino, int peso, boolean dirigido) {
         Boolean b = false;
-        if (ady.size() != 0) {
-            if (ady.get(origen) != null) {
-                if (ady.get(origen).get(destino) != null) {
+        Node e = new Node(destino, peso);                         //constructor
+        List<Node> aux = new ArrayList<Node>();
+        aux = ady.get(origen);
+        int i = 0;
+        if (ady.get(origen).size() > 0) {
+            while (i < aux.size()) {
+                if (aux.get(i).first == destino) {
                     b = true;
+                    i = aux.size();
                 }
+                i++;
             }
+
         }
+
         return b;
     }
 
