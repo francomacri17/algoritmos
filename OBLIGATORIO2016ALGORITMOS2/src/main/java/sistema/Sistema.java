@@ -64,6 +64,18 @@ public class Sistema implements ISistema {
         return colores;
     }
 
+    public ArrayList<Integer> getPosDataCenters() {
+        ArrayList<Integer> dataCentersPos = new ArrayList<>();
+        int cantidad = contarPuntos();
+        int j = 0;
+        for (int i = 0; i < cantidad; i++) {
+            if (cantPuntos[i] instanceof data_center) {
+                dataCentersPos.add(i);
+            }
+        }
+        return dataCentersPos;
+    }
+
     public static void setCantPuntos(int cantPuntos) {
 
         if (Sistema.cantPuntos == null) {
@@ -432,15 +444,15 @@ public class Sistema implements ISistema {
             url = url.append("http://maps.googleapis.com/maps/api/staticmap?center=-14.2350040,-51.9252800&zoom=3&size=640x640");
             String string = url.toString();
             int cantidad = contarPuntos();
-             for (int i = 0; i < cantidad; i++) {
+            for (int i = 0; i < cantidad; i++) {
                 if (cantPuntos[i] instanceof ciudad) {
                     string = string + "&markers=color:yellow%7Clabel:none%7C" + cantPuntos[i].getCoordX() + "," + cantPuntos[i].getCoordY() + "";
-                }if (cantPuntos[i] instanceof data_center) {
-                        string = string + "&markers=color:" + cantPuntos[i].getColor() + "%7Clabel:none%7C" + cantPuntos[i].getCoordX() + "," + cantPuntos[i].getCoordY() + "";
-                    }
                 }
-            
-             
+                if (cantPuntos[i] instanceof data_center) {
+                    string = string + "&markers=color:" + cantPuntos[i].getColor() + "%7Clabel:none%7C" + cantPuntos[i].getCoordX() + "," + cantPuntos[i].getCoordY() + "";
+                }
+            }
+
             if (java.awt.Desktop.isDesktopSupported()) {
                 try {
                     Desktop dk = Desktop.getDesktop();
@@ -458,12 +470,57 @@ public class Sistema implements ISistema {
 
     @Override
 
-    public Retorno procesarInformacion(Double coordX, Double coordY,
+    public Retorno procesarInformacion(int indexDC,
             int esfuerzoCPUrequeridoEnHoras) {
 
         // TODO Auto-generated method stub
-        return new Retorno(Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Resultado.ERROR_2, "error 2", 2);
+        boolean b = false;
+        int costo = 0;
+        Punto p = cantPuntos[indexDC];
+        data_center dc = listaDC.darDC(p.getCoordX(), p.getCoordY());
+        data_center dcCercano = new data_center();
+        if (dc.getCpuUsado() + esfuerzoCPUrequeridoEnHoras <= dc.getCapacidadCPUenHoras()) {
+            costo = dc.getCostoCPUporHora() * esfuerzoCPUrequeridoEnHoras;
+            r = new Retorno(Resultado.OK, dc.getNombre(), costo);
+            dc.setCpuUsado(esfuerzoCPUrequeridoEnHoras);
+            b = true;
+        }
+        if (b == false) {
+            if (getPosDataCenters() != null) {
+                ArrayList<Integer> pos = getPosDataCenters();
+                Dijkstra d = new Dijkstra();
+                d.dijkstra(indexDC);
+                for (int i = 0; i < pos.size(); i++) {
+                    p = cantPuntos[pos.get(i)];
+                    dc = listaDC.darDC(p.getCoordX(), p.getCoordY());
+                    if (d.masCercano(pos.get(i)) < 1000000000) {
+                        if ((dc.getCpuUsado() + esfuerzoCPUrequeridoEnHoras) <= dc.getCapacidadCPUenHoras()) {
+                            if (costo != 0) {
+                                int costoAux = d.masCercano(pos.get(i)) + (dc.getCostoCPUporHora() * esfuerzoCPUrequeridoEnHoras);
+                                if (costo > costoAux) {
+                                    costo = costoAux;
+                                    r = new Retorno(Resultado.OK, dc.getNombre(), costo);
+                                    dcCercano = dc;
+                                }
 
+                            }
+                            if (costo == 0) {
+                                costo = d.masCercano(pos.get(i)) + (dc.getCostoCPUporHora() * esfuerzoCPUrequeridoEnHoras);
+                                r = new Retorno(Resultado.OK, dc.getNombre(), costo);
+                            }
+
+                        }
+                    }
+
+                }
+                if(dcCercano!=null){
+                    dcCercano.setCapacidadCPUenHoras(esfuerzoCPUrequeridoEnHoras);
+                }
+            }
+
+        }
+        return r;
     }
 
     @Override
@@ -564,19 +621,23 @@ public class Sistema implements ISistema {
 
         registrarEmpresa("Antel", "18 de juli y ejido 1230, Canelones", "Uruguay", "antelsupourtDC@antel.com", "red");
 
-        registrarEmpresa("Movistar", "Uruguay 1520, Brasilia", "Brasil", "movistarDC@Movistar.com", "orange");
-
-        registrarEmpresa("Claro", "AV. Simon Bolivar 1239, Asuncion", "Paraguay", "claroDcSupourt@claro.com", "purple");
-
-        empresa e = new empresa("Intel", "BL. Freedom, Silicom Valley, Los Angeles", "EEUU", "windowsDC@hotmail.com", "white");
+        empresa e = new empresa("Claro", "AV. Simon Bolivar 1239, Asuncion", "Paraguay", "claroDcSupourt@claro.com", "purple");
 
         registrarEmpresa(e.getNombre(), e.getDireccion(), e.getPais(), e.getEmail_contacto(), e.getColor());
 
-        data_center dc = new data_center("UnknownDC", -13.8771089, -75.5106465, e, 100, 250, e.getColor());
+        registrarDC("SaltaDC", -24.7997688, -65.4150367, e.getNombre(), 50, 199);
 
-        listaDC.agregarNodoAlFinal(dc);
+        empresa e1 = new empresa("Intel", "BL. Freedom, Silicom Valley, Los Angeles", "EEUU", "windowsDC@hotmail.com", "white");
 
-        agregarPunto(dc);
+        registrarEmpresa(e1.getNombre(), e1.getDireccion(), e1.getPais(), e1.getEmail_contacto(), e1.getColor());
+
+        registrarDC("UnknownDC", -13.8771089, -75.5106465, e1.getNombre(), 100, 250);
+
+        empresa e2 = new empresa("Movistar", "Uruguay 1520, Brasilia", "Brasil", "movistarDC@Movistar.com", "orange");
+
+        registrarEmpresa(e2.getNombre(), e2.getDireccion(), e2.getPais(), e2.getEmail_contacto(), e2.getColor());
+
+        registrarDC("Brasilia", -15.7942287, -47.8821658, e2.getNombre(), 75, 99);
 
         registrarTramo(0, 1, 1);
         registrarTramo(1, 2, 1);

@@ -29,7 +29,7 @@ public interface ISistema {
 
     Retorno mapaEstado();
 
-    Retorno procesarInformacion(Double coordX, Double coordY, int esfuerzoCPUrequeridoEnHoras);
+    Retorno procesarInformacion(int indexDC, int esfuerzoCPUrequeridoEnHoras);
 
     Retorno listadoRedMinima();
 

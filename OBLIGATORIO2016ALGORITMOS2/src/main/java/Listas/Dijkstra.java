@@ -238,7 +238,9 @@ public class Dijkstra {
         dijkstraEjecutado = true;
 
     }
-
+    public int masCercano(int posicion){
+        return distancia[posicion];
+    }
     public void addEdge(int origen, int destino, int peso, boolean dirigido) {
 
         ady.get(origen).add(new Node(destino, peso));    //grafo diridigo

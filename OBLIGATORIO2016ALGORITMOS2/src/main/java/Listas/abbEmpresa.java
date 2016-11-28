@@ -6,6 +6,7 @@
 package Listas;
 
 import Modelo.empresa;
+import java.util.ArrayList;
 
 
 /**
@@ -13,12 +14,18 @@ import Modelo.empresa;
  * @author franc
  */
 public class abbEmpresa{ 
- 
+    private static ArrayList<empresa> aux = new ArrayList<empresa>();
+
+    public ArrayList<empresa> getAux() {
+        return aux;
+    }
+    
     private class nodoArbol {
         private abbEmpresa hd;
         private abbEmpresa hi;
         private empresa dato;
- 
+        
+        
         private void nodoArbol(){
             hd = null;
             hi = null;
@@ -82,7 +89,16 @@ public class abbEmpresa{
  
         }
     }
- 
+    public ArrayList<empresa> listarEmpresa(){
+        if (!esVacio()) {
+           aux.add(raiz.hi.raiz.dato);
+           raiz.hi.posOrder();
+           raiz.hd.posOrder();
+           aux.add(raiz.hd.raiz.dato);
+            
+        }
+        return aux;
+    } 
     public abbEmpresa buscar(String nombre){
         abbEmpresa buscada = null;
         if (!esVacio()) {

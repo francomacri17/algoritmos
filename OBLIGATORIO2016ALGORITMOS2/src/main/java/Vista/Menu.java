@@ -5,6 +5,7 @@ import Listas.abbEmpresa;
 import Modelo.Punto;
 import Modelo.ciudad;
 import Modelo.data_center;
+import Modelo.empresa;
 import com.sun.xml.internal.ws.client.ContentNegotiation;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -30,6 +31,8 @@ import maps.java.ShowMaps;
 import maps.java.StaticMaps;
 import maps.java.StreetView;
 import sistema.ISistema;
+import sistema.Retorno;
+import sistema.Retorno.Resultado;
 import sistema.Sistema;
 
 public class Menu extends javax.swing.JFrame {
@@ -139,6 +142,17 @@ public class Menu extends javax.swing.JFrame {
         jLabelResultadoPunto = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jComboBoxEmpresas = new javax.swing.JComboBox<>();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jComboBoxDC = new javax.swing.JComboBox<>();
+        jButton10 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jTextFieldCPUREQUERIDO = new javax.swing.JTextField();
 
         setTitle("Detalles Place");
         setAlwaysOnTop(true);
@@ -816,15 +830,73 @@ public class Menu extends javax.swing.JFrame {
 
         jTabbedPaneDataCenter.addTab("Punto", jPanel12);
 
+        jLabel21.setText("Empresa Solicitante");
+
+        jLabel24.setText("CPU Requerido");
+
+        jLabel25.setText("DC Destino");
+
+        jButton10.setText("Solicitar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 728, Short.MAX_VALUE)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton10)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                    .addComponent(jLabel22)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel23))
+                                .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jLabel25))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxDC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldCPUREQUERIDO, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(jComboBoxEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jTextFieldCPUREQUERIDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(jComboBoxDC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jButton10)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         jTabbedPaneDataCenter.addTab("Solicitud de Procesamiento", jPanel13);
@@ -835,7 +907,7 @@ public class Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPaneDataCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+                .addComponent(jTabbedPaneDataCenter)
                 .addGap(87, 87, 87))
         );
         layout.setVerticalGroup(
@@ -856,6 +928,8 @@ public class Menu extends javax.swing.JFrame {
         final DefaultComboBoxModel modeloDestino = new DefaultComboBoxModel();
         final DefaultComboBoxModel modeloPuntos = new DefaultComboBoxModel();
         final DefaultComboBoxModel modelColores = new DefaultComboBoxModel();
+        final DefaultComboBoxModel modeloDC = new DefaultComboBoxModel();
+        final DefaultComboBoxModel empresas = new DefaultComboBoxModel();
         Punto[] puntos = sistema.getCantPuntos();
         ArrayList<String> colores = sistema.getColores();
         for (int i = 0; i < colores.size(); i++) {
@@ -873,16 +947,23 @@ public class Menu extends javax.swing.JFrame {
                 s = new StringBuilder("DC :" + sistema.getDC(puntos[i].getCoordX(), puntos[i].getCoordY()).getNombre()).toString();
                 modeloOrigen.addElement(new ComboItem(s, i));
                 modeloDestino.addElement(new ComboItem(s,i));
-               modeloPuntos.addElement(new ComboItem(s, i)); 
-            } else {
-
+               modeloPuntos.addElement(new ComboItem(s, i));
+               modeloDC.addElement(new ComboItem(s, i));
+            } 
+            
+            ArrayList<empresa> e = sistema.getListaEmpresa().getAux(); 
+            for (int j = 0; j < e.size(); j++) {
+                empresas.addElement(e.get(j));
             }
+                
             
         }
         jComboBoxOrigen.setModel(modeloOrigen);
         jComboBoxDestino.setModel(modeloDestino);
         jComboBoxPuntos.setModel(modeloPuntos);
         jComboBoxColor.setModel(modelColores);
+        jComboBoxDC.setModel(modeloDC);
+        jComboBoxEmpresas.setModel(empresas);
     }
     
     private void RegistrarCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCiudadActionPerformed
@@ -1026,6 +1107,15 @@ public class Menu extends javax.swing.JFrame {
                 // TODO add your handling code here:
         jLabel20.setText(sistema.mapaEstado().toString());    
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        jTextArea1.setText("");
+        Object itemO = jComboBoxDC.getSelectedItem();
+        int valueDC = ((ComboItem)itemO).getValue();
+        Retorno r = sistema.procesarInformacion(valueDC,Integer.parseInt(jTextFieldCPUREQUERIDO.getText()));
+        jTextArea1.setText(r.resultado.toString()+"\n"+r.valorString+"\n"+r.valorEntero);
+    }//GEN-LAST:event_jButton10ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabel_DP_NombrePr;
@@ -1035,6 +1125,7 @@ public class Menu extends javax.swing.JFrame {
     private java.awt.Button RegistrarDataCenter;
     private java.awt.Button RegistrarEmpresa;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1044,7 +1135,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBoxColor;
+    private javax.swing.JComboBox<String> jComboBoxDC;
     private javax.swing.JComboBox<String> jComboBoxDestino;
+    private javax.swing.JComboBox<String> jComboBoxEmpresas;
     private javax.swing.JComboBox<String> jComboBoxOrigen;
     private javax.swing.JComboBox<String> jComboBoxPuntos;
     private javax.swing.JLabel jLabel1;
@@ -1060,6 +1153,11 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel2tramosResultado;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1084,11 +1182,14 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPaneDataCenter;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextFieldCPUREQUERIDO;
     private javax.swing.JTextField jTextFieldCapacidadCPU;
     private javax.swing.JTextField jTextFieldCoordenaYCiudad;
     private javax.swing.JTextField jTextFieldCoordenadaXCiudad;
