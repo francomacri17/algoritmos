@@ -1,5 +1,6 @@
 package Vista;
 
+import Listas.Dijkstra;
 import Listas.abbEmpresa;
 import Modelo.Punto;
 import Modelo.ciudad;
@@ -41,6 +42,7 @@ public class Menu extends javax.swing.JFrame {
     private StreetView ObjStreetView = new StreetView();
     private StaticMaps ObjStaticMaps = new StaticMaps();
     private Places ObjPlaces = new Places();
+    
 
     public Menu() {
         initComponents();
@@ -96,8 +98,8 @@ public class Menu extends javax.swing.JFrame {
         jTextFieldDireccion = new javax.swing.JTextField();
         jTextFieldPais = new javax.swing.JTextField();
         jTextFieldEmail = new javax.swing.JTextField();
-        jTextFieldColor = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jComboBoxColor = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -127,8 +129,16 @@ public class Menu extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel2tramosResultado = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jComboBoxPuntos = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jLabelResultadoPunto = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
 
         setTitle("Detalles Place");
         setAlwaysOnTop(true);
@@ -303,7 +313,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,12 +388,6 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldColor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldColorActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Listar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,22 +415,22 @@ public class Menu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 191, Short.MAX_VALUE)
+                                .addGap(0, 190, Short.MAX_VALUE)
                                 .addComponent(jLabelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(59, 59, 59))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldPais, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(RegistrarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1)
-                                .addGap(70, 70, 70)))))
+                                .addGap(70, 70, 70))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldPais, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -453,13 +457,13 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextFieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                    .addComponent(jComboBoxColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(RegistrarEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(43, 43, 43)
-                .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -477,7 +481,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JLabel_DP_NombrePr1)
-                .addContainerGap(645, Short.MAX_VALUE))
+                .addContainerGap(644, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,7 +598,7 @@ public class Menu extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(213, 213, 213)
                         .addComponent(jLabel9)))
-                .addContainerGap(366, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -635,8 +639,7 @@ public class Menu extends javax.swing.JFrame {
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2tramosResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2tramosResultado, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -644,6 +647,13 @@ public class Menu extends javax.swing.JFrame {
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("Ver mapa");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
             }
         });
 
@@ -655,7 +665,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGap(722, 722, 722)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
+                        .addComponent(jSeparator2))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -677,7 +687,9 @@ public class Menu extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton9))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -707,10 +719,12 @@ public class Menu extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addGap(17, 17, 17)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addGap(18, 18, Short.MAX_VALUE)))
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jTabbedPaneDataCenter.addTab("Tramo", jPanel9);
@@ -729,7 +743,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(209, 209, 209)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(264, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -741,11 +755,88 @@ public class Menu extends javax.swing.JFrame {
 
         jTabbedPaneDataCenter.addTab("Datos de Prueba", jPanel11);
 
+        jComboBoxPuntos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel20.setText("Puntos");
+
+        jButton7.setText("Eliminar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabelResultadoPunto.setText("jLabel11");
+        jLabelResultadoPunto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jButton8.setText("jButton8");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelResultadoPunto, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel20)
+                        .addGroup(jPanel12Layout.createSequentialGroup()
+                            .addComponent(jComboBoxPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(132, 132, 132)
+                            .addComponent(jButton7)))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jButton8)
+                        .addGap(567, 567, 567)))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jLabel20)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jButton7)))
+                .addGap(35, 35, 35)
+                .addComponent(jButton8)
+                .addGap(184, 184, 184)
+                .addComponent(jLabelResultadoPunto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jTabbedPaneDataCenter.addTab("Punto", jPanel12);
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 728, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 555, Short.MAX_VALUE)
+        );
+
+        jTabbedPaneDataCenter.addTab("Solicitud de Procesamiento", jPanel13);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPaneDataCenter)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPaneDataCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+                .addGap(87, 87, 87))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -759,21 +850,30 @@ public class Menu extends javax.swing.JFrame {
     private void cargarPuntosComboBox() {
         jComboBoxOrigen.removeAllItems();
         jComboBoxDestino.removeAllItems();
+        jComboBoxPuntos.removeAllItems();
+        jComboBoxColor.removeAllItems();
         final DefaultComboBoxModel modeloOrigen = new DefaultComboBoxModel();
         final DefaultComboBoxModel modeloDestino = new DefaultComboBoxModel();
+        final DefaultComboBoxModel modeloPuntos = new DefaultComboBoxModel();
+        final DefaultComboBoxModel modelColores = new DefaultComboBoxModel();
         Punto[] puntos = sistema.getCantPuntos();
-
+        ArrayList<String> colores = sistema.getColores();
+        for (int i = 0; i < colores.size(); i++) {
+            modelColores.addElement(colores.get(i));
+        }
         for (int i = 0; i < puntos.length; i++) {
             String s = new String();
             if (puntos[i] instanceof ciudad) {
                 s = new StringBuilder("Ciudad :" + sistema.getCiudad(puntos[i].getCoordX(), puntos[i].getCoordY()).getNombre()).toString();
                 modeloOrigen.addElement(new ComboItem(s, i));
                 modeloDestino.addElement(new ComboItem(s,i));
+                modeloPuntos.addElement(new ComboItem(s, i));
             }
             if (puntos[i] instanceof data_center) {
                 s = new StringBuilder("DC :" + sistema.getDC(puntos[i].getCoordX(), puntos[i].getCoordY()).getNombre()).toString();
                 modeloOrigen.addElement(new ComboItem(s, i));
                 modeloDestino.addElement(new ComboItem(s,i));
+               modeloPuntos.addElement(new ComboItem(s, i)); 
             } else {
 
             }
@@ -781,7 +881,10 @@ public class Menu extends javax.swing.JFrame {
         }
         jComboBoxOrigen.setModel(modeloOrigen);
         jComboBoxDestino.setModel(modeloDestino);
+        jComboBoxPuntos.setModel(modeloPuntos);
+        jComboBoxColor.setModel(modelColores);
     }
+    
     private void RegistrarCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarCiudadActionPerformed
         // TODO add your handling code here:
         jLabel11.setText("");
@@ -827,10 +930,6 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldEmailActionPerformed
 
-    private void jTextFieldColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldColorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldColorActionPerformed
-
     private void RegistrarDataCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDataCenterActionPerformed
         // TODO add your handling code here:
         jLabel_DC.setText("");
@@ -840,13 +939,13 @@ public class Menu extends javax.swing.JFrame {
                 jTextFieldnombreEmpresaDC.getText(),
                 Integer.parseInt(jTextFieldCapacidadCPU.getText()),
                 Integer.parseInt(jTextFieldCostoCPU.getText())).resultado.toString());
-
+        cargarPuntosComboBox();
     }//GEN-LAST:event_RegistrarDataCenterActionPerformed
 
     private void RegistrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarEmpresaActionPerformed
         // TODO add your handling code here:
         jLabelEmpresa.setText("");
-        jLabelEmpresa.setText(sistema.registrarEmpresa(jTextFieldNombreEmpresa.getText(), jTextFieldDireccion.getText(), jTextFieldPais.getText(), jTextFieldEmail.getText(), jTextFieldColor.getText()).resultado.toString());
+        jLabelEmpresa.setText(sistema.registrarEmpresa(jTextFieldNombreEmpresa.getText(), jTextFieldDireccion.getText(), jTextFieldPais.getText(), jTextFieldEmail.getText(), jComboBoxColor.getSelectedItem().toString()).resultado.toString());
     }//GEN-LAST:event_RegistrarEmpresaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -879,7 +978,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel2tramosResultado.setText("");
         Object itemO = jComboBoxOrigen.getSelectedItem();
         int valueOrigen = ((ComboItem)itemO).getValue();
-        Object itemD = jComboBoxOrigen.getSelectedItem();
+        Object itemD = jComboBoxDestino.getSelectedItem();
         int valueDestino = ((ComboItem)itemD).getValue();
         jLabel2tramosResultado.setText(sistema.registrarTramo(valueOrigen, valueDestino, Integer.parseInt(jTextFieldPesoTramo.getText())).resultado.toString());
         
@@ -890,6 +989,7 @@ public class Menu extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         sistema.cargarDatosPrueba();
+        cargarPuntosComboBox();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -898,8 +998,34 @@ public class Menu extends javax.swing.JFrame {
         Object itemO = jComboBoxOrigen.getSelectedItem();
         int valueOrigen = ((ComboItem)itemO).getValue();
         Object itemD = jComboBoxDestino.getSelectedItem();
-        jLabel2tramosResultado.setText(sistema.eliminarTramo(valueOrigen, Integer.parseInt(jTextFieldPesoTramo.getText())).resultado.toString());
+        int valueDestino = ((ComboItem)itemD).getValue();
+        jLabel2tramosResultado.setText(sistema.eliminarTramo(valueOrigen, valueDestino).resultado.toString());
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        jLabelResultadoPunto.setText("");
+        Object itemP = jComboBoxPuntos.getSelectedItem();
+        int valuePunto = ((ComboItem)itemP).getValue();
+        jLabelResultadoPunto.setText(sistema.eliminarPunto(valuePunto).resultado.toString());
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        Dijkstra d = new Dijkstra();
+        d.dijkstra(0);
+        d.init();
+        ArrayList a = d.recorridoAnchura(0);
+        for (int i = 0; i < a.size(); i++) {
+            System.out.println(a.get(i));
+        }
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+                // TODO add your handling code here:
+        jLabel20.setText(sistema.mapaEstado().toString());    
+    }//GEN-LAST:event_jButton9ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabel_DP_NombrePr;
@@ -914,8 +1040,13 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBoxColor;
     private javax.swing.JComboBox<String> jComboBoxDestino;
     private javax.swing.JComboBox<String> jComboBoxOrigen;
+    private javax.swing.JComboBox<String> jComboBoxPuntos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -928,6 +1059,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel2tramosResultado;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -937,10 +1069,13 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelEmpresa;
+    private javax.swing.JLabel jLabelResultadoPunto;
     private javax.swing.JLabel jLabel_DC;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -955,7 +1090,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPaneDataCenter;
     private javax.swing.JTextField jTextFieldCapacidadCPU;
-    private javax.swing.JTextField jTextFieldColor;
     private javax.swing.JTextField jTextFieldCoordenaYCiudad;
     private javax.swing.JTextField jTextFieldCoordenadaXCiudad;
     private javax.swing.JTextField jTextFieldCoordenadaXDC;

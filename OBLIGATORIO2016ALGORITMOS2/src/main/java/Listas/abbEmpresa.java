@@ -35,7 +35,7 @@ public class abbEmpresa{
     public boolean esVacio(){
         return (raiz == null);
     }
- 
+    
     public void insertar(empresa e){
         if (esVacio()) {
             nodoArbol nuevo = new nodoArbol();

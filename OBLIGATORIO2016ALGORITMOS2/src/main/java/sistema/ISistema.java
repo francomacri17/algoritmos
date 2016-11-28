@@ -5,6 +5,7 @@ import Listas.abbEmpresa;
 import Modelo.Punto;
 import Modelo.ciudad;
 import Modelo.data_center;
+import java.util.ArrayList;
 
 // No modificar esta clase!!!!!!!!!
 public interface ISistema {
@@ -22,9 +23,9 @@ public interface ISistema {
 
     Retorno registrarTramo(int indexOrigen, int indexDestino, int peso);
 
-    Retorno eliminarTramo(Double coordXi, Double coordYi, Double coordXf, Double coordYf);
+    Retorno eliminarTramo(int indexOrigen, int indexDestino);
 
-    Retorno eliminarPunto(Double coordX, Double coordY);
+    Retorno eliminarPunto(int indexPunto);
 
     Retorno mapaEstado();
 
@@ -46,4 +47,8 @@ public interface ISistema {
 
     data_center getDC(String nombre);
     void cargarDatosPrueba();
+
+    public ArrayList<String> getColores();
+
+    public void cargarColores();
 }

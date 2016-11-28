@@ -91,7 +91,9 @@ public class Inicio extends javax.swing.JFrame {
              s.inicializarSistema(Integer.parseInt(this.jTextField1.getText()));
              Menu m = new Menu();
              m.setVisible(true);
+             s.cargarColores();
              this.setVisible(false);
+             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
