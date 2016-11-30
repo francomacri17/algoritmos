@@ -281,19 +281,29 @@ public class Sistema implements ISistema {
             String pais, String email_contacto, String color) {
 
         // TODO Auto-generated method stub
-        empresa e = new empresa();
-        int i = 0;
-        while (i < colores.size()) {
-            if (colores.get(i).equals(color)) {
-                colores.remove(i);
-                i = colores.size();
+        Retorno r;
+        if (listaEmpresa.validateEmail(email_contacto)) {
+            if (listaEmpresa.buscarEmpresa(nombre) == null) {
+                int i = 0;
+                while (i < colores.size()) {
+                    if (colores.get(i).equals(color)) {
+                        colores.remove(i);
+                        i = colores.size();
+                    }
+                    i++;
+
+                }
+                listaEmpresa.insertar(new empresa(nombre, direccion, pais, email_contacto, color));
+
+                r = new Retorno(Resultado.OK);
+            }else{
+                r = new Retorno(Resultado.ERROR_2);
             }
-            i++;
+
+        } else {
+            r = new Retorno(Resultado.ERROR_1);
         }
-        listaEmpresa.insertar(new empresa(nombre, direccion, pais, email_contacto, color));
-
-        return new Retorno(Resultado.OK);
-
+        return r;
     }
 
     @Override
@@ -386,28 +396,25 @@ public class Sistema implements ISistema {
     public Retorno registrarTramo(int indexOrigen, int indexDestino, int peso) {
 
         // TODO Auto-generated method stub
-        Retorno r;
+        Retorno r = new Retorno(Resultado.ERROR_3, "Ya existe un tramo registrado entre los vertices", 3);;
 
         if (peso <= 0) {
 
             r = new Retorno(Resultado.ERROR_1, "El peso es menor o igual a 0", 1);
 
-        } else if (!dijkstra.existsEdge(indexOrigen, indexDestino)) {
+        } else {
+            if (!dijkstra.existsEdge(indexOrigen, indexDestino)) {
 
             dijkstra.addEdge(indexOrigen, indexDestino, peso, false);
 
             r = new Retorno(Resultado.OK);
-
-        } else {
-
-            r = new Retorno(Resultado.ERROR_3, "Ya existe un tramo registrado entre los vertices", 3);
-
+            }
         }
 
         return r;
 
     }
-
+    
     @Override
 
     public Retorno eliminarTramo(int indexOrigen, int indexDestino) {
@@ -514,7 +521,7 @@ public class Sistema implements ISistema {
                     }
 
                 }
-                if(dcCercano!=null){
+                if (dcCercano != null) {
                     dcCercano.setCapacidadCPUenHoras(esfuerzoCPUrequeridoEnHoras);
                 }
             }

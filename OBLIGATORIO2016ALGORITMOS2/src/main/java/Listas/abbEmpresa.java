@@ -7,6 +7,8 @@ package Listas;
 
 import Modelo.empresa;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -19,7 +21,18 @@ public class abbEmpresa{
     public ArrayList<empresa> getAux() {
         return aux;
     }
-    
+     private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"; 
+     public boolean validateEmail(String email) {
+ 
+        // Compiles the given regular expression into a pattern.
+        Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+ 
+        // Match the given input against this pattern
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+ 
+    }
     private class nodoArbol {
         private abbEmpresa hd;
         private abbEmpresa hi;
@@ -73,7 +86,7 @@ public class abbEmpresa{
         if(!esVacio()){
             raiz.hi.inOrder(string);
             
-            string.append(raiz.dato.getNombre() + " ; " + raiz.dato.getEmail_contacto() +" | ");  
+            string.append(raiz.dato.getNombre() + " ; " + raiz.dato.getEmail_contacto() +"|" +"\n");  
             
             raiz.hd.inOrder(string);
         }

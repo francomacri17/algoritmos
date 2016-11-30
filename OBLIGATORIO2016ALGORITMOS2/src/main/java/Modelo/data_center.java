@@ -14,14 +14,14 @@ public class data_center extends Punto {
     private empresa empresa;
     private int capacidadCPUenHoras;
     private int costoCPUporHora;
-    private static int cpuUsado = 0;
+    private int cpuUsado = 0;
 
     public data_center() {
         
     }
 
-    public void setCpuUsado(int cpuUsado) {
-        data_center.cpuUsado = cpuUsado;
+    public void setCpuUsado(int pCpuUsadoo) {
+            cpuUsado = cpuUsado+pCpuUsadoo;
     }
 
     public int getCpuUsado() {

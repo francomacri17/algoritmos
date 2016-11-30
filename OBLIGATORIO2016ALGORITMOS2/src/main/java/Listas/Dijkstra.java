@@ -226,17 +226,7 @@ public class Dijkstra {
             }
 
         }
-
-        System.out.printf("Distancias mas cortas iniciando en vertice %d\n", inicial);
-
-        for (int i = 1; i <= V; ++i) {
-
-            System.out.printf("Vertice %d , distancia mas corta = %d\n", i, distancia[i]);
-
-        }
-
         dijkstraEjecutado = true;
-
     }
     public int masCercano(int posicion){
         return distancia[posicion];
@@ -280,35 +270,6 @@ public class Dijkstra {
         }
     }
 
-    public ArrayList<Integer> recorridoAnchura(int nodoI) {
-//Lista donde guardo los nodos recorridos
-        ArrayList<Integer> recorridos = new ArrayList<Integer>();
-        int nodeI, adyacente, peso;
-//El nodo inicial ya está visitado
-        visitado[nodoI] = true;
-//Cola de visitas de los nodos adyacentes
-        ArrayList<Integer> cola = new ArrayList<Integer>();
-//Se lista el nodo como ya recorrido
-        recorridos.add(nodoI);
-//Se agrega el nodo a la cola de visitas
-        cola.add(nodoI);
-//Hasta que visite todos los nodos
-        while (!cola.isEmpty()) {
-            int j = cola.remove(0); //Se saca el primero nodo de la cola
-//Se busca en la matriz que representa el grafo los nodos adyacentes
-            for (int i = 0; i < ady.get(nodoI).size(); i++) {
-                adyacente = ady.get(nodoI).get(i).first;   //id del vertice adyacente
-
-                peso = ady.get(nodoI).get(i).second;
-
-                //Si es un nodo adyacente y no está visitado entonces
-                if (!visitado[i]) {
-                    relajacion(nodoI, adyacente, peso);
-                }
-            }
-        }
-        return recorridos;//Devuelvo el recorrido del grafo en anchura
-    }
 
     public void removeEdge(int indexPunto) {
         List<Node> aux = ady.get(indexPunto);
@@ -317,55 +278,6 @@ public class Dijkstra {
             while (i < aux.size()) {
                 removeEdge(indexPunto, i);
                 i++;
-            }
-        }
-    }
-
-    /* public void bfs(Node root)
-    {
-        //Since queue is a interface
-        Queue<Node> queue = new LinkedList<Node>();
-        init();
-        if(root == null) return;
-
-         //Adds to end of queue
-        Q.add(root);
-
-        while(!queue.isEmpty())
-        {
-            //removes from front of queue
-            Node r = queue.remove(); 
-            System.out.print(r.first + "\t");
-
-            //Visit child first before grandchild
-            for(Node n: r.())
-            {
-                if(n.state == State.Unvisited)
-                {
-                    queue.add(n);
-                    n.state = State.Visited;
-                }
-            }
-        }
-
-
-    }*/
-    public void dfs(int root) {
-        //Avoid infinite loops
-
-        int actual, adyacente, peso;
-        System.out.print(root + "\t");
-        visitado[root] = true;
-
-        //for every child
-        for (int i = 0; i < getNumberOfVertices(); i++) {
-            if (ady.get(root).size() != 0) {
-
-                adyacente = ady.get(root).get(i).first;
-                //if childs state is not visited then recurse
-                if (!visitado[adyacente]) {
-                    dfs(adyacente);
-                }
             }
         }
     }

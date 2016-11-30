@@ -51,4 +51,5 @@ public interface ISistema {
     public ArrayList<String> getColores();
 
     public void cargarColores();
+    int contarPuntos();
 }
